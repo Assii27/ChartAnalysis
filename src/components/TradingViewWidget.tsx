@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, memo } from 'react';
 
-const TradingViewWidget: React.FC = () => {
+const TradingViewWidget: React.FC<{ darkMode?: boolean }> = ({ darkMode }) => {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!container.current) return;
+    
+    // Clear previous if any (though memo should handle it)
+    container.current.innerHTML = '';
 
-    // Direct script injection for the advanced chart widget
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
     script.type = "text/javascript";
@@ -16,7 +18,7 @@ const TradingViewWidget: React.FC = () => {
       "symbol": "OANDA:XAUUSD",
       "interval": "15",
       "timezone": "Etc/UTC",
-      "theme": "light",
+      "theme": darkMode ? "dark" : "light",
       "style": "1",
       "locale": "en",
       "enable_publishing": false,
@@ -32,7 +34,7 @@ const TradingViewWidget: React.FC = () => {
         container.current.innerHTML = '';
       }
     };
-  }, []);
+  }, [darkMode]);
 
   return (
     <div className="tradingview-widget-container h-full w-full rounded-2xl overflow-hidden" ref={container}>

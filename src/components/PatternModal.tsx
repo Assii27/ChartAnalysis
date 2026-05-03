@@ -28,26 +28,26 @@ export const PatternModal: React.FC<PatternModalProps> = ({ pattern, onClose }) 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[90vh]"
+          className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative z-10 flex flex-col max-h-[90vh] border dark:border-slate-800"
         >
           {/* Header */}
-          <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+          <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
             <div className="flex items-center gap-4">
               <div className={`p-3 rounded-2xl ${
-                pattern.type === 'Reversal' ? 'bg-indigo-100 text-indigo-600' : 
-                pattern.type === 'Continuation' ? 'bg-emerald-100 text-emerald-600' : 
-                'bg-amber-100 text-amber-600'
+                pattern.type === 'Reversal' ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400' : 
+                pattern.type === 'Continuation' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400' : 
+                'bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400'
               }`}>
                 <pattern.icon size={24} />
               </div>
               <div>
-                <h2 className="text-2xl font-display font-bold text-slate-900">{pattern.name}</h2>
+                <h2 className="text-2xl font-display font-bold text-slate-900 dark:text-white">{pattern.name}</h2>
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{pattern.type} Pattern</span>
               </div>
             </div>
             <button 
               onClick={onClose}
-              className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400 hover:text-slate-600"
+              className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-400 hover:text-slate-600"
             >
               <X size={24} />
             </button>
@@ -55,22 +55,22 @@ export const PatternModal: React.FC<PatternModalProps> = ({ pattern, onClose }) 
 
           {/* Content */}
           <div className="p-8 overflow-y-auto space-y-8">
-            <section className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
-              <div className="flex items-center gap-2 mb-4 text-slate-900 font-bold">
+            <section className="bg-slate-50 dark:bg-slate-800/20 rounded-3xl p-6 border border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-bold">
                 <Activity size={20} className="text-indigo-500" />
                 <h3>Pattern Dynamics</h3>
               </div>
-              <div className="h-64 bg-white rounded-2xl border border-slate-100 p-8 shadow-inner overflow-hidden flex items-center justify-center">
+              <div className="h-64 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-8 shadow-inner overflow-hidden flex items-center justify-center">
                  <PatternIllustration id={pattern.id} type={pattern.type} />
               </div>
             </section>
 
             <section>
-              <div className="flex items-center gap-2 mb-4 text-slate-900 font-bold">
+              <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-bold">
                 <Info size={20} className="text-indigo-500" />
                 <h3>Overview</h3>
               </div>
-              <p className="text-slate-600 leading-relaxed text-lg">
+              <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
                 {pattern.details}
               </p>
             </section>
@@ -119,12 +119,12 @@ export const PatternModal: React.FC<PatternModalProps> = ({ pattern, onClose }) 
             </section>
 
             <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-5 border border-slate-100 rounded-2xl bg-slate-50/30">
-                <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+              <div className="p-5 border border-slate-100 dark:border-slate-800 rounded-2xl bg-slate-50/30 dark:bg-slate-800/10">
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
                   <Scale size={16} className="text-indigo-500" />
                   Key Confluences
                 </h4>
-                <ul className="text-sm text-slate-500 space-y-2">
+                <ul className="text-sm text-slate-500 dark:text-slate-400 space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0" />
                     Relative Strength Index (RSI) confirmation
@@ -139,12 +139,12 @@ export const PatternModal: React.FC<PatternModalProps> = ({ pattern, onClose }) 
                   </li>
                 </ul>
               </div>
-              <div className="p-5 border border-slate-100 rounded-2xl bg-slate-50/30">
-                <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
+              <div className="p-5 border border-slate-100 dark:border-slate-800 rounded-2xl bg-slate-50/30 dark:bg-slate-800/10">
+                <h4 className="font-bold text-slate-800 dark:text-slate-200 mb-2 flex items-center gap-2">
                   <Target size={16} className="text-indigo-500" />
                   Strategy Tip
                 </h4>
-                <p className="text-sm text-slate-500 leading-relaxed">
+                <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                   Always wait for a candle body close outside the pattern boundaries. False breakouts are common; look for 'the retest' of the break level for a higher probability entry.
                 </p>
               </div>
@@ -152,7 +152,7 @@ export const PatternModal: React.FC<PatternModalProps> = ({ pattern, onClose }) 
           </div>
 
           {/* Footer */}
-          <div className="p-6 bg-slate-50 border-t border-slate-100">
+          <div className="p-6 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
             <button className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-indigo-200">
               Learn More at TradingView Mastery <ChevronRight size={20} />
             </button>

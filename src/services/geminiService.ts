@@ -24,11 +24,14 @@ export interface MarketStrategy {
 }
 
 export async function getXAUUSDAnalysis(referencePrice?: string): Promise<MarketStrategy> {
-  const priceContext = referencePrice ? ` Current market price level is around ${referencePrice}.` : "";
+  const priceContext = referencePrice ? ` The user specifies the CURRENT PRICE is exactly ${referencePrice}. Use this value for all your calculations (entry, stop loss, take profit) and ignore any other historical prices you might know.` : "";
   const ai = getAI();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
-    contents: `Analyze the current technical outlook for Gold (XAUUSD) on the 2Hr timeframe.${priceContext} Provide a structured trading strategy. Since you don't have absolute live ticks, base your logic on general technical principles for this price level.`,
+    contents: `You are an expert technical analyst. Analyze the current technical outlook for Gold (XAUUSD) on the 2Hr timeframe.${priceContext} 
+    Provide a structured trading strategy in JSON format. 
+    Strictly ensure the JSON matches the schema. 
+    If you are unsure of the price, prioritize the user-provided reference price of ${referencePrice || 'current market rates'}.`,
     config: {
       responseMimeType: "application/json",
       responseSchema: {
@@ -51,8 +54,11 @@ export async function getXAUUSDAnalysis(referencePrice?: string): Promise<Market
   });
 
   try {
-    return JSON.parse(response.text || "{}");
+    const text = response.text();
+    if (!text) throw new Error("Empty response from AI");
+    return JSON.parse(text);
   } catch (e) {
-    throw new Error("Failed to parse market analysis");
+    console.error("AI Analysis Parse Error:", e, response);
+    throw new Error("Market data sync error. The market is too volatile or the AI model is temporarily unavailable. Please try again.");
   }
 }

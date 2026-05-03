@@ -403,7 +403,7 @@ export const PatternIllustration: React.FC<PatternIllustrationProps> = ({ id, ty
   };
 
   return (
-    <div className={`w-full aspect-video rounded-xl flex items-center justify-center overflow-hidden border border-slate-100 mb-4 bg-slate-50 relative animate-pulse-subtle ${
+    <div className={`w-full aspect-video rounded-xl flex items-center justify-center overflow-hidden border border-slate-100 dark:border-slate-800 mb-4 bg-slate-50 dark:bg-slate-950 relative animate-pulse-subtle ${
        type === 'Reversal' ? 'text-indigo-400' : type === 'Continuation' ? 'text-emerald-400' : 'text-amber-400'
     }`}>
       <svg viewBox="0 0 100 100" className="w-full h-full p-4 drop-shadow-sm">
