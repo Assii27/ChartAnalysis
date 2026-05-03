@@ -1,20 +1,26 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# ChartPattern Pro
 
-# Run and deploy your AI Studio app
+An interactive cheat sheet for 29 essential chart patterns with animations and technical indicators.
 
-This contains everything you need to run your app locally.
+## Features
+- **Library**: Interactive catalog of 29 chart patterns and 5 candlestick patterns.
+- **Visuals**: Animated SVG patterns showing ideal formations.
+- **Live Market**: Real-time XAU/USD (Gold) data via TradingView widgets.
+- **Indicators**: Winning probability scores and key confluence metrics.
 
-View your app in AI Studio: https://ai.studio/apps/f839df53-9de9-4ece-9270-cfc67fcf276a
+## Development
+1. Install dependencies: `npm install`
+2. Run dev server: `npm run dev`
 
-## Run Locally
+## Deployment
+### Via AI Studio (Cloud Run)
+1. Click the **"Deploy"** button in the top right corner of the AI Studio interface.
+2. Follow the prompts to deploy your application to Google Cloud Run.
+3. Once deployed, you'll receive a public URL for your application.
 
-**Prerequisites:**  Node.js
+### Manual Deployment (Docker)
+1. Build the image: `docker build -t chart-pattern-pro .`
+2. Run the container: `docker run -p 8080:80 chart-pattern-pro`
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Developer
+Developed by **Asif Maner**.
