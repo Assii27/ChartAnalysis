@@ -15,9 +15,9 @@ export const AIStrategyPanel: React.FC<{ darkMode?: boolean }> = ({ darkMode }) 
     try {
       const data = await getXAUUSDAnalysis(curPrice);
       setStrategy(data);
-    } catch (err) {
-      setError("Market data sync error. Please try again or verify price level.");
-      console.error(err);
+    } catch (err: any) {
+      setError(err?.message || "Market data sync error. Please try again or verify price level.");
+      console.error("Strategy Fetch Error:", err);
     } finally {
       setLoading(false);
     }

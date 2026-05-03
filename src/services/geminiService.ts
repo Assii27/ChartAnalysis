@@ -24,15 +24,17 @@ export interface MarketStrategy {
 }
 
 export async function getXAUUSDAnalysis(referencePrice?: string): Promise<MarketStrategy> {
-  const priceContext = referencePrice ? ` The user specifies the CURRENT PRICE is exactly ${referencePrice}. Use this value for all your calculations (entry, stop loss, take profit) and ignore any other historical prices you might know.` : "";
+  const priceContext = referencePrice ? ` The current market price for Gold (XAU/USD) is ${referencePrice}. Base your trade levels (Entry, Stop Loss, Take Profit) relative to this price.` : "Use current market rates for Gold (XAU/USD).";
   const ai = getAI();
+  
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
-    contents: `You are an expert technical analyst. Analyze the current technical outlook for Gold (XAUUSD) on the 2Hr timeframe.${priceContext} 
-    Provide a structured trading strategy in JSON format. 
-    Strictly ensure the JSON matches the schema. 
-    If you are unsure of the price, prioritize the user-provided reference price of ${referencePrice || 'current market rates'}.`,
+    contents: `Analyze the XAU/USD (Gold) pair on a 2-hour timeframe. ${priceContext}
+    Provide a professional technical analysis and a specific trade setup.
+    Include trend bias, confidence strength, entry, stop loss, take profit, and the rationale behind your analysis.
+    Output MUST be in valid JSON format.`,
     config: {
+      systemInstruction: "You are a professional Gold (XAUUSD) trading analysts. You provide high-accuracy signals based on price action and trend analysis. Your output is always strictly valid JSON.",
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,
@@ -54,11 +56,20 @@ export async function getXAUUSDAnalysis(referencePrice?: string): Promise<Market
   });
 
   try {
-    const text = response.text();
-    if (!text) throw new Error("Empty response from AI");
-    return JSON.parse(text);
+    const text = response.text;
+    if (!text) {
+      console.error("Gemini Response is missing text:", response);
+      throw new Error("Empty response from AI");
+    }
+    
+    // Clean up potential markdown formatting if the model didn't strictly follow responseMimeType
+    const jsonString = text.includes('```json') 
+      ? text.split('```json')[1].split('```')[0].trim()
+      : text.trim();
+
+    return JSON.parse(jsonString);
   } catch (e) {
     console.error("AI Analysis Parse Error:", e, response);
-    throw new Error("Market data sync error. The market is too volatile or the AI model is temporarily unavailable. Please try again.");
+    throw new Error("Market data sync error. The analysis could not be processed. Please try again.");
   }
 }
