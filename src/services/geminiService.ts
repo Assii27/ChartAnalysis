@@ -5,8 +5,8 @@ let aiInstance: GoogleGenAI | null = null;
 function getAI() {
   if (!aiInstance) {
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY is not configured in the environment.");
+    if (!apiKey || apiKey === "undefined") {
+      throw new Error("GEMINI_API_KEY is missing. Please set your Gemini API key in the Settings menu (Gear icon) to enable AI Strategy features.");
     }
     aiInstance = new GoogleGenAI({ apiKey });
   }
