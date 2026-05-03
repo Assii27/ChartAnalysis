@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Filter, BookOpen, Crown, Target, LayoutDashboard, Menu, X, Sparkles, TrendingUp, Activity, Zap } from 'lucide-react';
+import { Search, Filter, BookOpen, Crown, Target, LayoutDashboard, Menu, X, Sparkles, TrendingUp, Activity, Zap, ShieldCheck } from 'lucide-react';
 import { CHART_PATTERNS, ChartPattern, PatternType } from './constants';
 import { PatternCard } from './components/PatternCard';
 import { PatternModal } from './components/PatternModal';
+import TradingViewWidget from './components/TradingViewWidget';
+import { AIStrategyPanel } from './components/AIStrategyPanel';
 import { GoldTicker } from './components/GoldTicker';
 import { CandlestickChart } from './components/CandlestickChart';
 
@@ -13,7 +15,7 @@ export default function App() {
   const [selectedPattern, setSelectedPattern] = useState<ChartPattern | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const [activeTab, setActiveTab] = useState<'Academy' | 'Live'>('Academy');
+  const [activeTab, setActiveTab] = useState<'Academy' | 'Live' | 'Resources'>('Academy');
 
   const filteredPatterns = useMemo(() => {
     return CHART_PATTERNS.filter(pattern => {
@@ -107,6 +109,13 @@ export default function App() {
 
             <div className="space-y-1">
               <p className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-4">Resources</p>
+              <button 
+                onClick={() => setActiveTab('Resources')}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium ${activeTab === 'Resources' ? 'bg-indigo-50 text-indigo-700 shadow-sm' : 'hover:bg-slate-50 text-slate-500'}`}
+              >
+                <ShieldCheck size={20} className="text-amber-500" />
+                Gold Strategy Guide
+              </button>
               <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-medium hover:bg-slate-50 text-slate-500">
                 <BookOpen size={20} />
                 Cheat Sheets
@@ -199,13 +208,20 @@ export default function App() {
                 </motion.div>
               )}
             </>
-          ) : (
+          ) : activeTab === 'Live' ? (
             <div className="space-y-6">
                <header className="space-y-1">
                   <h2 className="text-3xl font-display font-extrabold text-slate-900">Live Market Analysis</h2>
                   <p className="text-slate-500 font-medium">Real-time XAU/USD data with advanced technical tools</p>
                 </header>
-                <CandlestickChart />
+                <div className="bg-white border border-slate-200 rounded-3xl h-[600px] shadow-sm overflow-hidden mb-6">
+                   <TradingViewWidget />
+                </div>
+                
+                <div className="mb-8 p-8 bg-slate-50 rounded-[40px] border border-slate-200">
+                  <AIStrategyPanel />
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                    <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
                       <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Trend Strength</h4>
@@ -219,6 +235,71 @@ export default function App() {
                       <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Signals (24h)</h4>
                       <p className="text-2xl font-display font-bold text-indigo-600">4 Active</p>
                    </div>
+                </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+               <header className="space-y-1">
+                  <h2 className="text-3xl font-display font-extrabold text-slate-900">Gold Strategy Guide</h2>
+                  <p className="text-slate-500 font-medium">Expert insights and high-probability setups for Gold (XAU/USD)</p>
+                </header>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-3 bg-amber-50 text-amber-600 rounded-2xl">
+                          <TrendingUp size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900">The Power of Pullbacks</h3>
+                      </div>
+                      <p className="text-slate-600 leading-relaxed">
+                        Gold often moves in sharp aggressive cycles. The safest entry is always at a 50-61.8% Fibonacci retracement of a major impulsive move. Look for confluence with previous resistance turned support.
+                      </p>
+                      <ul className="space-y-2">
+                        <li className="flex items-center gap-2 text-sm text-slate-500"><Zap size={14} className="text-indigo-500" /> Wait for impulsive breakout</li>
+                        <li className="flex items-center gap-2 text-sm text-slate-500"><Zap size={14} className="text-indigo-500" /> Draw Fib from low to high</li>
+                        <li className="flex items-center gap-2 text-sm text-slate-500"><Zap size={14} className="text-indigo-500" /> Look for bullish Hammer at 61.8%</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-3 bg-indigo-50 text-indigo-600 rounded-2xl">
+                          <Activity size={24} />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-900">London Open Strategy</h3>
+                      </div>
+                      <p className="text-slate-600 leading-relaxed">
+                        The 8:00 AM GMT (London Open) provides the highest volume for Gold. Watch for the 'Asia Range' breakout. A fake-out below the range followed by a sharp recovery often leads to the daily trend.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-slate-900 p-8 rounded-3xl text-white space-y-6 relative overflow-hidden">
+                    <div className="absolute -bottom-10 -right-10 opacity-10">
+                      <Crown size={200} />
+                    </div>
+                    <div className="relative z-10 space-y-4">
+                      <h3 className="text-2xl font-display font-bold">Pro Confluence Checklist</h3>
+                      <div className="space-y-4 pt-4">
+                        {[
+                          "DXY (Dollar Index) correlation check",
+                          "Major psychological levels ($2100, $2150...)",
+                          "NFP & CPI data release schedule",
+                          "H4 Structure vs M15 Entry alignment",
+                          "RSI Overbought/Oversold with Divergence"
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-2xl">
+                            <div className="w-6 h-6 rounded-lg bg-indigo-500 flex items-center justify-center text-[10px] font-bold">
+                              {i+1}
+                            </div>
+                            <span className="text-sm font-medium text-slate-300">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
           )}

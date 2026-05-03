@@ -11,7 +11,8 @@ import {
   RefreshCw,
   Repeat,
   Layers,
-  LayoutGrid
+  LayoutGrid,
+  Crown
 } from 'lucide-react';
 
 export type PatternType = 'Reversal' | 'Continuation' | 'Candlestick';
@@ -289,6 +290,87 @@ export const CHART_PATTERNS: ChartPattern[] = [
     icon: ArrowDownRight
   },
   {
+    id: 30,
+    name: "Inverse Head & Shoulders",
+    type: "Reversal",
+    winningRatio: 84,
+    description: "Bullish reversal pattern with three troughs, the middle being lowest.",
+    details: "The mirror image of the Head and Shoulders. Highly reliable bullish reversal signal when the neckline is broken.",
+    icon: ShieldCheck
+  },
+  {
+    id: 31,
+    name: "Wolfe Wave",
+    type: "Reversal",
+    winningRatio: 78,
+    description: "A natural rhythmic pattern of five waves in the market.",
+    details: "Found in all timeframes. Predicts an Estimated Arrival Time (ETA) and Estimated Arrival Price (EPA).",
+    icon: Zap
+  },
+  {
+    id: 32,
+    name: "Gartley Pattern",
+    type: "Reversal",
+    winningRatio: 72,
+    description: "Harmonic pattern using Fibonacci ratios for precise entries.",
+    details: "Commonly occurs in gold markets. Validated at the 78.6% retracement of the XA leg.",
+    icon: Crown
+  },
+  {
+    id: 33,
+    name: "Bat Pattern",
+    type: "Reversal",
+    winningRatio: 74,
+    description: "Harmonic pattern with a deep retracement of the original leg.",
+    details: "Validated at the 88.6% Fibonacci retracement. Known for providing tight stop-loss opportunities.",
+    icon: Crown
+  },
+  {
+    id: 34,
+    name: "Butterfly Pattern",
+    type: "Reversal",
+    winningRatio: 71,
+    description: "Extension pattern where the final leg exceeds the starting point.",
+    details: "Occurs at major market turning points. D point is typically at 127% or 161.8% extension of XA.",
+    icon: Crown
+  },
+  {
+    id: 35,
+    name: "Shark Pattern",
+    type: "Reversal",
+    winningRatio: 69,
+    description: "Powerful harmonic pattern that traps traders on failed breakouts.",
+    details: "A leading indicator often followed by a 5-0 pattern. Highly effective in volatile commodities like gold.",
+    icon: Zap
+  },
+  {
+    id: 36,
+    name: "Broadening Wedge Top",
+    type: "Reversal",
+    winningRatio: 64,
+    description: "Diverging trendlines at market peaks indicating volatility.",
+    details: "Forms after a strong uptrend. Suggests market indecision and high probability of a bearish reversal.",
+    icon: TrendingDown
+  },
+  {
+    id: 37,
+    name: "V-Top Reversal",
+    type: "Reversal",
+    winningRatio: 60,
+    description: "Sharp vertical rise followed immediately by a vertical decline.",
+    details: "Common in parabolic moves. Extremely difficult to trade but highly profitable when caught early.",
+    icon: TrendingDown
+  },
+  {
+    id: 38,
+    name: "Horizontal Channel",
+    type: "Continuation",
+    winningRatio: 66,
+    description: "Consolidation between two parallel horizontal lines.",
+    details: "Also known as a trading range. Breakout in either direction signals the next major move.",
+    icon: Square
+  },
+  {
     id: 101,
     name: "Hammer / Pin Bar",
     type: "Candlestick",
@@ -331,6 +413,69 @@ export const CHART_PATTERNS: ChartPattern[] = [
     winningRatio: 65,
     description: "Indecision candle where open and close are nearly identical.",
     details: "Signifies a balance between buyers and sellers. Often precedes a major trend reversal or exhaustion.",
+    icon: Zap
+  },
+  {
+    id: 106,
+    name: "Morning Star",
+    type: "Candlestick",
+    winningRatio: 78,
+    description: "Three-candle bullish reversal pattern.",
+    details: "Large red candle, small body indifferent candle, and large green candle. Signals the dawn of a new uptrend.",
+    icon: Zap
+  },
+  {
+    id: 107,
+    name: "Evening Star",
+    type: "Candlestick",
+    winningRatio: 79,
+    description: "Three-candle bearish reversal pattern.",
+    details: "Large green candle, small body indifferent candle, and large red candle. Signifies the end of an uptrend.",
+    icon: Zap
+  },
+  {
+    id: 108,
+    name: "Piercing Line",
+    type: "Candlestick",
+    winningRatio: 72,
+    description: "Bullish reversal pattern after a downtrend.",
+    details: "Second candle opens below the first but closes above its midpoint. Indicates strong rejection of lows.",
+    icon: Zap
+  },
+  {
+    id: 109,
+    name: "Dark Cloud Cover",
+    type: "Candlestick",
+    winningRatio: 71,
+    description: "Bearish reversal pattern after an uptrend.",
+    details: "Second candle opens above the first but closes below its midpoint. Signifies momentum shift to sellers.",
+    icon: Zap
+  },
+  {
+    id: 110,
+    name: "Harami Cross (Bullish)",
+    type: "Candlestick",
+    winningRatio: 75,
+    description: "Smaller candle inside the previous candle's body.",
+    details: "Indicates market exhaustion. The second candle is a Doji, making it a highly reliable turning point.",
+    icon: Zap
+  },
+  {
+    id: 111,
+    name: "Three White Soldiers",
+    type: "Candlestick",
+    winningRatio: 82,
+    description: "Three consecutive long green candles with short wicks.",
+    details: "Strong bullish reversal. Each candle opens within the previous body and closes at a new high.",
+    icon: Zap
+  },
+  {
+    id: 112,
+    name: "Three Black Crows",
+    type: "Candlestick",
+    winningRatio: 81,
+    description: "Three consecutive long red candles with short wicks.",
+    details: "Strong bearish reversal. Indicates massive selling pressure and end of the bullish sentiment.",
     icon: Zap
   }
 ];
