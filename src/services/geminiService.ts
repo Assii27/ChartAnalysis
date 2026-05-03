@@ -4,9 +4,9 @@ let aiInstance: GoogleGenAI | null = null;
 
 function getAI() {
   if (!aiInstance) {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey === "undefined") {
-      throw new Error("GEMINI_API_KEY is missing. Please set your Gemini API key in the Settings menu (Gear icon) to enable AI Strategy features.");
+    const apiKey = typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : '';
+    if (!apiKey || apiKey === "undefined" || apiKey === "") {
+      throw new Error("Gemini API Key is missing. Please ensure it's configured in your environment or Settings.");
     }
     aiInstance = new GoogleGenAI({ apiKey });
   }
@@ -28,7 +28,7 @@ export async function getXAUUSDAnalysis(referencePrice?: string): Promise<Market
   const ai = getAI();
   
   const response = await ai.models.generateContent({
-    model: "gemini-3-flash-preview",
+    model: "gemini-2.0-flash-exp",
     contents: `Analyze the XAU/USD (Gold) pair on a 2-hour timeframe. ${priceContext}
     Provide a professional technical analysis and a specific trade setup.
     Include trend bias, confidence strength, entry, stop loss, take profit, and the rationale behind your analysis.
