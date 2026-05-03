@@ -27,7 +27,7 @@ export default function App() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-50">
+    <div id="app-root-container" className="min-h-screen flex flex-col md:flex-row bg-slate-50">
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
         <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export default function App() {
       </div>
 
       {/* Sidebar Navigation */}
-      <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-slate-200 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 overflow-y-auto ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex flex-col h-full">
           <div className="p-8 hidden md:block">
             <div className="flex items-center gap-3">
@@ -153,7 +153,7 @@ export default function App() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto overflow-x-hidden">
         <div className="max-w-7xl mx-auto space-y-8">
           {activeTab === 'Academy' ? (
             <>

@@ -6,21 +6,33 @@ interface PatternIllustrationProps {
   type: 'Reversal' | 'Continuation' | 'Candlestick';
 }
 
+interface CandleProps {
+  key?: React.Key;
+  x: number;
+  o: number;
+  h: number;
+  l: number;
+  c: number;
+  index: number;
+  width?: number;
+}
+
+const Candle = ({ x, o, h, l, c, index, width = 4 }: CandleProps) => {
+  const isBull = c <= o; // In SVG Y is down, so lower Y is higher price (bullish)
+  const color = isBull ? "#10b981" : "#ef4444";
+  return (
+    <motion.g
+      initial={{ opacity: 0, scaleY: 0 }}
+      animate={{ opacity: 1, scaleY: 1 }}
+      transition={{ delay: index * 0.03, duration: 0.3 }}
+    >
+      <line x1={x} y1={h} x2={x} y2={l} stroke={color} strokeWidth="1" strokeLinecap="round" />
+      <rect x={x - width/2} y={Math.min(o, c)} width={width} height={Math.max(Math.abs(o - c), 1)} fill={color} rx="1" />
+    </motion.g>
+  );
+};
+
 export const PatternIllustration: React.FC<PatternIllustrationProps> = ({ id, type }) => {
-  const Candle = ({ x, o, h, l, c, index, width = 4 }: { x: number, o: number, h: number, l: number, c: number, index: number, width?: number }) => {
-    const isBull = c <= o; // In SVG Y is down, so lower Y is higher price (bullish)
-    const color = isBull ? "#10b981" : "#ef4444";
-    return (
-      <motion.g
-        initial={{ opacity: 0, scaleY: 0 }}
-        animate={{ opacity: 1, scaleY: 1 }}
-        transition={{ delay: index * 0.03, duration: 0.3 }}
-      >
-        <line x1={x} y1={h} x2={x} y2={l} stroke={color} strokeWidth="1" strokeLinecap="round" />
-        <rect x={x - width/2} y={Math.min(o, c)} width={width} height={Math.max(Math.abs(o - c), 1)} fill={color} rx="1" />
-      </motion.g>
-    );
-  };
 
   const ChartBackground = () => {
     // Generate grid lines

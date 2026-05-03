@@ -1,6 +1,17 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let aiInstance: GoogleGenAI | null = null;
+
+function getAI() {
+  if (!aiInstance) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not configured in the environment.");
+    }
+    aiInstance = new GoogleGenAI({ apiKey });
+  }
+  return aiInstance;
+}
 
 export interface MarketStrategy {
   trend: "Bullish" | "Bearish" | "Neutral";
@@ -14,6 +25,7 @@ export interface MarketStrategy {
 
 export async function getXAUUSDAnalysis(referencePrice?: string): Promise<MarketStrategy> {
   const priceContext = referencePrice ? ` Current market price level is around ${referencePrice}.` : "";
+  const ai = getAI();
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: `Analyze the current technical outlook for Gold (XAUUSD) on the 2Hr timeframe.${priceContext} Provide a structured trading strategy. Since you don't have absolute live ticks, base your logic on general technical principles for this price level.`,
